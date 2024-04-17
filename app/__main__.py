@@ -11,7 +11,7 @@ from app import config
 from app.handlers import menu
 # from app.middlewares.access import PrivateMiddleware
 # from app.middlewares.db_session import DbMiddleware
-from app.misc.ui_commands import set_ui_commands
+# from app.misc.ui_commands import set_ui_commands
 
 logger = logging.getLogger(__name__)
 
@@ -31,9 +31,9 @@ async def main():
     # dp.update.middleware(PrivateMiddleware(config.GROUP))
     dp.include_routers(menu.router)
 
-    bot = Bot(token=config.BOT_TOKEN, parse_mode=ParseMode.HTML)
+    bot = Bot(token="6548612127:AAG7ve3gvItuGfoDLOEXE4wTqrHi4NdOlAg", parse_mode=ParseMode.HTML)
 
-    await set_ui_commands(bot)
+    # await set_ui_commands(bot)
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
 

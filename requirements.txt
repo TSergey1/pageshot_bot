@@ -5,3 +5,4 @@ SQLAlchemy==2.0.22
 # psycopg-binary==3.1.12
 # psycopg==3.1.12
 redis==5.0.1
+validators==0.28.0
