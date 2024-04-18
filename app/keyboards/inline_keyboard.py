@@ -20,8 +20,16 @@ def main_kb() -> InlineKeyboardMarkup:
 
 def change_language() -> InlineKeyboardMarkup:
     """Клавиатура выбора языка."""
-    ru = get_btn(btn.CHANGE_LANGUAGE, cmd.CHANGE_LANGUAGE)
-    en = get_btn(btn.CREATE_PAGESHOT, cmd.CREATE_PAGESHOT)
+    ru = get_btn(btn.RU, cmd.RU)
+    en = get_btn(btn.EN, cmd.EN)
+    return InlineKeyboardMarkup(
+        inline_keyboard=[[ru, en], ]
+    )
+
+def change_language() -> InlineKeyboardMarkup:
+    """Клавиатура выбора языка."""
+    ru = get_btn(btn.RU, cmd.RU)
+    en = get_btn(btn.EN, cmd.EN)
     return InlineKeyboardMarkup(
         inline_keyboard=[[ru, en], ]
     )

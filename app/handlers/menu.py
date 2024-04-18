@@ -17,6 +17,8 @@ router = Router(name="main_menu-router")
 
 
 @router.message(CommandStart())
+@router.callback_query(F.data == cmd.RU)
+@router.callback_query(F.data == cmd.EN)
 async def cmd_start(message: Message) -> None:
     """Обработчик запуска бота."""
     text = msg.start_msg(message.from_user.first_name)
@@ -26,15 +28,19 @@ async def cmd_start(message: Message) -> None:
 @router.callback_query(F.data == cmd.CHANGE_LANGUAGE)
 async def change_language(callback: CallbackQuery) -> None:
     """Обработчик выбора языка."""
+    await callback.message.delete()
     await callback.message.answer(msg.CHANGE_LANGUAGE,
                                   reply_markup=kb.change_language())
 
 
-@router.callback_query(F.data == cmd.CHANGE_LANGUAGE)
-async def change_language(callback: CallbackQuery) -> None:
-    """Обработчик выбора языка."""
-    await callback.message.answer(msg.CHANGE_LANGUAGE,
-                                  reply_markup=kb.change_language())
+@router.callback_query((F.data == cmd.RU) | (F.data == cmd.EN))
+async def set_language(callback: CallbackQuery) -> None:
+    """Обработчик получение языка от пользователя."""
+    await callback.message.delete()
+    lang: str = callback.data[9:]
+    #####
+    await callback.message.answer(f"Вы выбрали {lang}")
+
 
 
 @router.message()

@@ -2,8 +2,8 @@ class Command:
     CHANGE_LANGUAGE = "change_language"
     CREATE_PAGESHOT = "create_pageshot"
 
-    RU = "ru_language"
-    EN = "en_language"
+    RU = "language_ru"
+    EN = "language_en"
 
 
 class Button:
