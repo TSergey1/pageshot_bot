@@ -13,16 +13,18 @@ from app.misc.cmd import Command as cmd
 
 router = Router(name="main_menu-router")
 
-# AUTO_KB = add_del_back_kb(cmd.AUTO_ADD, cmd.AUTO_DEL, cmd.MAIN)
-
-
 @router.message(CommandStart())
 @router.callback_query(F.data == cmd.RU)
 @router.callback_query(F.data == cmd.EN)
-async def cmd_start(message: Message) -> None:
+async def cmd_start(call_or_message: CallbackQuery | Message,) -> None:
     """Обработчик запуска бота."""
-    text = msg.start_msg(message.from_user.first_name)
-    await message.answer(text, reply_markup=kb.main_kb())
+    text = msg.start_msg(call_or_message.from_user.first_name)
+    if isinstance(call_or_message, Message):
+        await call_or_message.answer(text, reply_markup=kb.main_kb())
+    else:
+        await call_or_message.message.edit_text(
+                text, reply_markup=kb.main_kb()
+            )
 
 
 @router.callback_query(F.data == cmd.CHANGE_LANGUAGE)
@@ -40,7 +42,6 @@ async def set_language(callback: CallbackQuery) -> None:
     lang: str = callback.data[9:]
     #####
     await callback.message.answer(f"Вы выбрали {lang}")
-
 
 
 @router.message()
