@@ -46,9 +46,9 @@ async def set_language(callback: CallbackQuery) -> None:
 @router.message()
 async def create_pageshot(message: Message, bot) -> None:
     """Обработчик веденного url."""
-    if validators.url(message.text, message.chat.id):
+    if validators.url(message.text):
         await message.answer(msg.SEND_REQUEST)
-        rez_shot = pageshot(message.text, message)
+        rez_shot = pageshot(message.text, message.chat.id, message.date)
         rez_shot = open('images/lsd.jpg', 'rb')
         await bot.send_photo(c.message.chat.id, Photo_lsd, caption='Я работаю')
     else:
