@@ -32,3 +32,10 @@ REDIS_PORT = os.getenv("REDIS_PORT", 6379)
 
 # LOG
 LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Pikwy (https://pikwy.com/api)
+API_URL = "https://api.pikwy.com/?token="
+TOKEN_PIKWY = os.getenv("TOKEN_PIKWY", "")
+WIDTH_SHOT = "1280"
+HEIGT_SHOT = "2000"
+RESPONSE_TIPE = "image"

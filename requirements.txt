@@ -7,4 +7,7 @@ SQLAlchemy==2.0.22
 redis==5.0.1
 validators==0.28.0
 flake8==7.0.0
-Babel==2.14.0
+selenium==4.19.0
+python-whois==0.9.3
+
+

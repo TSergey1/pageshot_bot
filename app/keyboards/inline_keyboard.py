@@ -26,13 +26,6 @@ def change_language() -> InlineKeyboardMarkup:
         inline_keyboard=[[ru, en], ]
     )
 
-def change_language() -> InlineKeyboardMarkup:
-    """Клавиатура выбора языка."""
-    ru = get_btn(btn.RU, cmd.RU)
-    en = get_btn(btn.EN, cmd.EN)
-    return InlineKeyboardMarkup(
-        inline_keyboard=[[ru, en], ]
-    )
 
 # def back_kb(back: str) -> InlineKeyboardMarkup:
 #     """Клавиатура возврата в предыдущее меню."""
@@ -55,9 +48,6 @@ def change_language() -> InlineKeyboardMarkup:
 #     return InlineKeyboardMarkup(
 #         inline_keyboard=[[user_menu_btn, auto_menu_btn], [search_btn]]
 #     )
-
-
-
 
 
 # def confirm_del_kb(delete: str, back: str) -> InlineKeyboardMarkup:
