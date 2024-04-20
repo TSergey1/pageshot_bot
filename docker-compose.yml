@@ -28,3 +28,13 @@ services:
       - redis
     command: sh -c "sleep 10 && alembic upgrade head && python -m app"
     restart: on-failure
+  
+  celery:
+    container_name: pageshot-celery
+    image: pageshot-backend
+    env_file: .env
+    command: sh -c "celery -A app.tasks.celery:celery_worker worker -l INFO"
+    volumes:
+      - static:/pageshot/app/static/
+    depends_on:
+      - redis
