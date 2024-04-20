@@ -1,0 +1,48 @@
+# English translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-04-21 00:31+0300\n"
+"PO-Revision-Date: 2024-04-21 00:31+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.14.0\n"
+
+msgid ""
+"Привет {first_name}! Меня зовут Pageshot_bot Я могу сделать "
+"скриншот любого сайта, который вы отправите мне в сообщении.\n"
+"Я работаю с протоколами http, https."
+msgstr ""
+"Hi {first_name}! My name is Pageshot_bot. I can take "
+"a screenshot of any website you send me in a message. \n"
+"I work with http, https protocols."
+
+msgid ""
+"Выберете язык:"
+msgstr ""
+"Choose your language:"
+
+msgid ""
+"Обработка ..."
+msgstr ""
+"Processing ..."
+
+msgid ""
+"Введен не корректный url!"
+msgstr ""
+"Incorrect url entered!"
+
+msgid ""
+"Вот ваш скрин!!!"
+msgstr ""
+"Here's your screenshot!!!"

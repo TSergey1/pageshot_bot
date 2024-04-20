@@ -33,6 +33,6 @@ services:
     container_name: pageshot-celery
     image: pageshot-backend
     env_file: .env
-    command: sh -c "celery -A app.tasks.celery:celery_worker worker -l INFO"
+    command: sh -c "celery -A app.worker.celery:celery_worker worker -l INFO"
     depends_on:
       - redis

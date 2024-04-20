@@ -187,3 +187,9 @@ sudo docker push <username>/<image_name>
 ```shell
 sudo docker compose -f docker-compose.yml up -d
 ```
+
+
+
+
+pybabel init -i locales/bot.pot -d locales -D bot -l ru
+pybabel extract --input-dirs=. -o locales/bot.pot
