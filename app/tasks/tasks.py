@@ -40,11 +40,11 @@ async def create_pageshot(url: str, chat_id: int, user_id: int, date_msg: str):
     page = await browser.newPage()
     await page.goto(url)
     start_processing = time.perf_counter()
-    # await page.setViewport(dict(width=1280, height=900))
+    await page.setViewport(dict(width=1280, height=900))
     path_pageshot = config.PATH_PAGESHOT.format(url_info.netloc,
                                                 user_id,
                                                 date_msg)
-    await page.screenshot(path=path_pageshot)
+    await page.screenshot(path="path_pageshot.png")
     await browser.close()
     finish_processing = time.perf_counter()
     time_processing: str = str(finish_processing - start_processing)
