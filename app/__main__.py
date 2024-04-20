@@ -20,13 +20,14 @@ async def main():
     logging.basicConfig(level=logging.DEBUG, format=config.LOG_FORMAT)
     logger.info("Bot start")
 
-    redis = Redis(host=config.REDIS_HOST, port=config.REDIS_PORT)
-    storage = RedisStorage(redis=redis)
+    # redis = Redis(host=config.REDIS_HOST, port=config.REDIS_PORT)
+    # storage = RedisStorage(redis=redis)
 
     # engine = create_async_engine(config.DB_URL, echo=config.DEBUG)
     # sessionmaker = async_sessionmaker(engine, expire_on_commit=False)
 
-    dp = Dispatcher(storage=storage)
+    # dp = Dispatcher(storage=storage)
+    dp = Dispatcher()
     # dp.update.middleware(DbMiddleware(sessionmaker))
     # dp.update.middleware(PrivateMiddleware(config.GROUP))
     dp.include_routers(menu.router)
