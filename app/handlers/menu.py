@@ -53,15 +53,19 @@ async def get_pageshot(message: Message, bot) -> None:
     """Обработчик веденного url."""
     if validators.url(message.text):
         await message.answer(msg.SEND_REQUEST)
-        path_pageshot, time_processing, chat_id = await asyncio.to_thread(
-            create_pageshot, message.text,
+        # path_pageshot, time_processing, chat_id = await asyncio.to_thread(
+        #     create_pageshot, message.text,
+        #     message.chat.id, message.from_user.id,
+        #     message.date
+        # )
+        path_pageshot, time_processing, chat_id = await create_pageshot(
+            message.text,
             message.chat.id, message.from_user.id,
             message.date
         )
-        time.sleep(5)
-        print(f"!!!!!!!!!!!!!!{path_pageshot}")
-        pageshot = open(path_pageshot, 'rb')
-        await bot.send_photo(chat_id, pageshot, caption="SEND_PAGESHOT")
+
+        # pageshot = open(path_pageshot, 'rb')
+        # await bot.send_photo(chat_id, pageshot, caption="SEND_PAGESHOT")
         # task = create_pageshot.s(message.text, message.chat.id,
         #                          message.from_user.id, message.date)
         # callback = handlers_bot.s(bot)

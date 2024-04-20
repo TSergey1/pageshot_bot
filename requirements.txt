@@ -3,11 +3,12 @@ python-dotenv==1.0.0
 SQLAlchemy==2.0.22
 psycopg-binary==3.1.18
 psycopg==3.1.18
-redis==5.0.1
+redis==5.0.3
 validators==0.28.0
 flake8==7.0.0
 selenium==4.19.0
 python-whois==0.9.3
 celery==5.4.0
+pyppeteer==1.0.0
 
 

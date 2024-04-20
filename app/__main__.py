@@ -20,20 +20,20 @@ async def main():
     logging.basicConfig(level=logging.DEBUG, format=config.LOG_FORMAT)
     logger.info("Bot start")
 
-    # redis = Redis(host=config.REDIS_HOST, port=config.REDIS_PORT)
-    # storage = RedisStorage(redis=redis)
+    redis = Redis(host=config.REDIS_HOST, port=config.REDIS_PORT)
+    storage = RedisStorage(redis=redis)
 
     # engine = create_async_engine(config.DB_URL, echo=config.DEBUG)
     # sessionmaker = async_sessionmaker(engine, expire_on_commit=False)
 
-    # dp = Dispatcher(storage=storage)
-    dp = Dispatcher()
+    dp = Dispatcher(storage=storage)
+    # dp = Dispatcher()
     # dp.update.middleware(DbMiddleware(sessionmaker))
     # dp.update.middleware(PrivateMiddleware(config.GROUP))
     dp.include_routers(menu.router)
 
-    bot = Bot(token="6548612127:AAG7ve3gvItuGfoDLOEXE4wTqrHi4NdOlAg", parse_mode=ParseMode.HTML)
-
+    bot = Bot(token=config.BOT_TOKEN, parse_mode=ParseMode.HTML)
+    
     # await set_ui_commands(bot)
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 

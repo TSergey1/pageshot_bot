@@ -4,7 +4,7 @@
 # from aiogram.types import TelegramObject
 
 # from app.dao.user import UserDAO
-# from app.services.user_service import UserService
+# # from app.services.user_service import UserService
 
 
 # class PrivateMiddleware(BaseMiddleware):
@@ -21,7 +21,7 @@
 #         user_dao: UserDAO = data["user_dao"]
 #         status = ["creator", "administrator", "member"]
 #         member = await event.bot.get_chat_member(self.group, tg_id)
-#         banned = await UserService.get_user_banned(user_dao, tg_id)
+#         # banned = await UserService.get_user_banned(user_dao, tg_id)
 
 #         if (
 #             data["event_chat"].type == "private"
