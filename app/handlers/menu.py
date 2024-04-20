@@ -2,11 +2,14 @@ from aiogram import F, Router
 from aiogram.filters import CommandStart
 # from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
+# from celery import chord
 import validators
 
 # from app.dao.user import UserDAO
+# from app.config import PATH_PAGESHOT
 import app.keyboards.inline_keyboard as kb
-from app.services.pageshot import pageshot
+# from app.tasks.tasks import create_pageshot, handlers_bot
+from app.tasks.tasks import create_pageshot
 from app.misc import msg
 from app.misc.cmd import Command as cmd
 
@@ -44,15 +47,36 @@ async def set_language(callback: CallbackQuery) -> None:
 
 
 @router.message()
-async def create_pageshot(message: Message, bot) -> None:
+async def get_pageshot(message: Message, bot) -> None:
     """Обработчик веденного url."""
     if validators.url(message.text):
         await message.answer(msg.SEND_REQUEST)
-        rez_shot = pageshot(message.text, message.chat.id, message.date)
-        rez_shot = open('images/lsd.jpg', 'rb')
-        await bot.send_photo(c.message.chat.id, Photo_lsd, caption='Я работаю')
+        path_pageshot, time_processing, chat_id = create_pageshot(
+            message.text, message.chat.id, message.from_user.id, message.date
+        )
+        pageshot = open(path_pageshot, 'rb')
+        await bot.send_photo(chat_id, pageshot, caption="SEND_PAGESHOT")
+        # task = create_pageshot.s(message.text, message.chat.id,
+        #                          message.from_user.id, message.date)
+        # callback = handlers_bot.s(bot)
+        # return chord(task)(callback)
+        # open("PATH_PAGESHOT".format(), 'rb')
+        # await bot.send_photo(c.message.chat.id, Photo_lsd, caption='Я работаю')
     else:
         await message.answer(msg.ERROR_URL)
+
+
+# @router.message()
+# async def update_message(message: Message, bot) -> None:
+#     """Обработчик обновление сообщения, добовление pageshot."""
+#     if validators.url(message.text):
+#         await message.answer(msg.SEND_REQUEST)
+#         create_pageshot
+#         pageshot(message.text, message.chat.id, message.date)
+#         open("PATH_PAGESHOT".format(), 'rb')
+#         await bot.send_photo(c.message.chat.id, Photo_lsd, caption='Я работаю')
+#     else:
+#         await message.answer(msg.ERROR_URL)
 
 
 
