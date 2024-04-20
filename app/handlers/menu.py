@@ -61,7 +61,7 @@ async def get_pageshot(message: Message, bot) -> None:
         path_pageshot, time_processing, chat_id = await create_pageshot(
             message.text,
             message.chat.id, message.from_user.id,
-            message.date
+            str(message.date)
         )
 
         # pageshot = open(path_pageshot, 'rb')

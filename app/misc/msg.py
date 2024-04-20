@@ -2,7 +2,7 @@ from aiogram.utils.markdown import hbold
 
 
 CHANGE_LANGUAGE = "Выберете язык:"
-SEND_REQUEST = "Запрос отправлен на сайт..."
+SEND_REQUEST = "Обработка ..."
 ERROR_URL = "Введен не корректный url"
 
 SEND_PAGESHOT = "Вот ваш скрин!!!"
