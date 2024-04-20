@@ -50,30 +50,21 @@ async def get_pageshot(message: Message, bot: Bot) -> None:
     """Обработчик веденного url."""
     if validators.url(message.text):
         await message.answer(_(msg.SEND_REQUEST))
-        # path_pageshot, time_processing, chat_id = await asyncio.to_thread(
-        #     create_pageshot, message.text,
-        #     message.chat.id, message.from_user.id,
-        #     message.date
-        # )
         path_pageshot, time_processing, chat_id = await create_pageshot(
             message.text,
             message.chat.id, message.from_user.id,
             str(message.date)
         )
-        await message.reply_photo(photo=FSInputFile(path_pageshot), caption=_(msg.SEND_PAGESHOT))
-        # with open(path_pageshot, "rb") as photo:
-        #     await bot.send_photo(chat_id=message.chat.id,
-        #                          photo=photo,
-        #                          caption=_(msg.SEND_PAGESHOT))
-            
-
-
-        # task = create_pageshot.s(message.text, message.chat.id,
-        #                          message.from_user.id, message.date)
-        # callback = handlers_bot.s(bot)
-        # return chord(task)(callback)
-        # open("PATH_PAGESHOT".format(), 'rb')
-        # await bot.send_photo(
-        # c.message.chat.id, Photo_lsd, caption='Я работаю')
+        await message.reply_photo(
+            photo=FSInputFile(path_pageshot),
+            caption=_(msg.SEND_PAGESHOT),
+            reply_markup=kb.more_site()
+        )
     else:
         await message.answer(_(msg.ERROR_URL))
+
+
+@router.callback_query((F.data == __(cmd.MORE)))
+async def more_site(callback: CallbackQuery) -> None:
+    """Обработчик получение языка от пользователя."""
+    await callback.message.answer("Хороший сайт!")

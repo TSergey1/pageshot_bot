@@ -5,6 +5,8 @@ class Command:
     RU = "language_ru"
     EN = "language_en"
 
+    MORE = "more"
+
 
 class Button:
     CHANGE_LANGUAGE = "Выбор языка"
@@ -12,3 +14,5 @@ class Button:
 
     RU = "Русский"
     EN = "English"
+
+    MORE = "Подробнее"
