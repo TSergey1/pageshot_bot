@@ -11,7 +11,7 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     tg_id: Mapped[int] = mapped_column(BigInteger, unique=True, index=True)
-    language: Mapped[str]
+    language: Mapped[str] = mapped_column(BigInteger, unique=True, index=True)
 
     def __repr__(self):
         return f"tg_id={self.tg_id} name={self.first_name}"
