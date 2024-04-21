@@ -13,7 +13,7 @@ from app import config
 from app.handlers import menu
 from app.middlewares.locales import BotI18nMiddleware
 from app.middlewares.db_session import DbMiddleware
-# from app.misc.ui_commands import set_ui_commands
+from app.misc.ui_commands import set_ui_commands
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +43,7 @@ async def main():
     dp.update.outer_middleware(BotI18nMiddleware(i18n))
     bot = Bot(token=config.BOT_TOKEN, parse_mode=ParseMode.HTML)
 
-    # await set_ui_commands(bot)
+    await set_ui_commands(bot)
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
 
