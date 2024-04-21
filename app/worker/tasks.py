@@ -1,7 +1,5 @@
-# import asyncio
 import time
 from pyppeteer import launch
-# from selenium import webdriver
 from urllib.parse import urlparse
 
 from app import config
@@ -9,7 +7,9 @@ from app import config
 
 async def create_pageshot(url: str, chat_id: int, user_id: int, date_msg: str):
     url_info = urlparse(url)
-    browser = await launch(headless=True, args=['--no-sandbox'])
+    browser = await launch({'dumpio': True,
+                            'headless': True,
+                            'args': ['--no-sandbox', '--disable-setuid-sandbox']})
     page = await browser.newPage()
     await page.goto(url)
     start_processing = time.perf_counter()
