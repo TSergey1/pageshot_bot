@@ -7,12 +7,12 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.utils.i18n import I18n
 from redis.asyncio import Redis
-# from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from app import config
 from app.handlers import menu
 from app.middlewares.locales import BotI18nMiddleware
-# from app.middlewares.db_session import DbMiddleware
+from app.middlewares.db_session import DbMiddleware
 # from app.misc.ui_commands import set_ui_commands
 
 logger = logging.getLogger(__name__)
@@ -25,8 +25,11 @@ async def main():
     redis = Redis(host=config.REDIS_HOST, port=config.REDIS_PORT)
     storage = RedisStorage(redis=redis)
 
-    # engine = create_async_engine(config.DB_URL, echo=config.DEBUG)
-    # sessionmaker = async_sessionmaker(engine, expire_on_commit=False)
+    engine = create_async_engine(config.DB_URL,
+                                 echo=config.DEBUG,
+                                 pool_pre_ping=True,
+                                 pool_recycle=3600)
+    sessionmaker = async_sessionmaker(engine, expire_on_commit=False)
 
     dp = Dispatcher(storage=storage)
 
@@ -34,8 +37,8 @@ async def main():
                 default_locale='ru',
                 domain='message')
     BotI18nMiddleware(i18n).setup(dp)
-    # dp.update.middleware(DbMiddleware(sessionmaker))
-    # dp.update.middleware(PrivateMiddleware(config.GROUP))
+
+    dp.update.middleware(DbMiddleware(sessionmaker))
     dp.include_routers(menu.router)
     dp.update.outer_middleware(BotI18nMiddleware(i18n))
     bot = Bot(token=config.BOT_TOKEN, parse_mode=ParseMode.HTML)

@@ -1,4 +1,5 @@
 import os
+import enum
 
 from dotenv import load_dotenv
 
@@ -39,7 +40,10 @@ def redis_url_celery():
 # LOG
 LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
-# Pikwy (https://pikwy.com/api)
+# PAGESHOT
 PATH_PAGESHOT = "app/image_pageshots/{0}_{1}_{2}.png"
-# WIDTH_SHOT = "1280"
-# HEIGT_SHOT = "2000"
+
+
+class Lenguage(enum.Enum):
+    en = "en"
+    ru = "ru"

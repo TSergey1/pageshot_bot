@@ -4,8 +4,6 @@ from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from app.dao.registration import RegDAO
-from app.dao.stats import StatsDAO
 from app.dao.user import UserDAO
 
 
@@ -25,6 +23,4 @@ class DbMiddleware(BaseMiddleware):
     ) -> Any:
         async with self.session_pool() as session:
             data["user_dao"] = UserDAO(session)
-            data["stats_dao"] = StatsDAO(session)
-            data["registration_dao"] = RegDAO(session)
             return await handler(event, data)
