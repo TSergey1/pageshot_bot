@@ -1,6 +1,4 @@
-import socket
 import validators
-import whois
 from aiogram import Bot, F, Router
 from aiogram.filters import CommandStart
 from aiogram.types import CallbackQuery, FSInputFile, Message
@@ -47,6 +45,13 @@ async def set_language(callback: CallbackQuery) -> None:
     await callback.message.edit_text(f"Вы выбрали {lang}")
 
 
+@router.callback_query(F.data == __(cmd.CREATE_PAGESHOT))
+async def enter_url(callback: CallbackQuery) -> None:
+    """Обработчик кнопки - Добавить Image в чат."""
+    bot_me = await callback.bot.me()
+    await callback.answer(url=f"t.me/{bot_me.username}?start=1")
+
+
 @router.message()
 async def get_pageshot(message: Message, bot: Bot) -> None:
     """Обработчик веденного url."""
@@ -60,7 +65,7 @@ async def get_pageshot(message: Message, bot: Bot) -> None:
         await message.reply_photo(
             photo=FSInputFile(path_pageshot),
             caption=_(msg.SEND_PAGESHOT),
-            reply_markup=kb.more_site(message.text)
+            reply_markup=kb.more_site()
         )
         await message.delete()
     else:
@@ -70,4 +75,4 @@ async def get_pageshot(message: Message, bot: Bot) -> None:
 @router.callback_query((F.data == __(cmd.MORE)))
 async def more_site(callback: CallbackQuery) -> None:
     """Обработчик получение языка от пользователя."""
-    await callback.message.answer("Хороший сайт!")
+    await callback.answer("Крутой сайт!")

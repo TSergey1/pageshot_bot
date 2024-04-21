@@ -31,9 +31,10 @@ REDIS_HOST = "localhost" if DEBUG else os.getenv("REDIS_HOST", "localhost")
 REDIS_PORT = os.getenv("REDIS_PORT", 6379)
 
 
-# def redis_url_celery():
-#     """Редис для celery"""
-#     return f"redis://{REDIS_HOST}:{REDIS_PORT}"
+def redis_url_celery():
+    """Редис для celery"""
+    return f"redis://{REDIS_HOST}:{REDIS_PORT}"
+
 
 # LOG
 LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

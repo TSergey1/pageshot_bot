@@ -27,9 +27,9 @@ def change_language() -> InlineKeyboardMarkup:
     )
 
 
-def more_site(url) -> InlineKeyboardMarkup:
+def more_site() -> InlineKeyboardMarkup:
     """Кнопка подробнее."""
-    more = get_btn(url, text=btn.MORE, callback_data=cmd.MORE)
+    more = get_btn(btn.MORE, cmd.MORE)
     return InlineKeyboardMarkup(
         inline_keyboard=[[more,], ]
     )
