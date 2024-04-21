@@ -11,4 +11,5 @@ python-whois==0.9.3
 celery==5.4.0
 pyppeteer==1.0.0
 Babel==2.14.0
+python-whois==0.9.3
 

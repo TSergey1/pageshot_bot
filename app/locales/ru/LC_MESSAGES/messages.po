@@ -40,3 +40,7 @@ msgstr ""
 msgid ""
 "Вот ваш скрин!!!"
 msgstr ""
+
+msgid ""
+"Подробнее"
+msgstr ""

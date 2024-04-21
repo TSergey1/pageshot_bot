@@ -1,4 +1,6 @@
+import socket
 import validators
+import whois
 from aiogram import Bot, F, Router
 from aiogram.filters import CommandStart
 from aiogram.types import CallbackQuery, FSInputFile, Message
@@ -58,8 +60,9 @@ async def get_pageshot(message: Message, bot: Bot) -> None:
         await message.reply_photo(
             photo=FSInputFile(path_pageshot),
             caption=_(msg.SEND_PAGESHOT),
-            reply_markup=kb.more_site()
+            reply_markup=kb.more_site(message.text)
         )
+        await message.delete()
     else:
         await message.answer(_(msg.ERROR_URL))
 
