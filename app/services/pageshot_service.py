@@ -1,6 +1,7 @@
 import time
-from pyppeteer import launch
 from urllib.parse import urlparse
+
+from pyppeteer import launch
 
 from app import config
 

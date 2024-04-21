@@ -6,10 +6,9 @@ from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
 
 import app.keyboards.inline_keyboard as kb
-from app.services.pageshot_service import create_pageshot
 from app.misc import msg
 from app.misc.cmd import Command as cmd
-
+from app.services.pageshot_service import create_pageshot
 
 router = Router(name="main_menu-router")
 

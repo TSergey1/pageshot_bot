@@ -100,5 +100,5 @@ REDIS_IMAGE=redis:7
 
 Выполнить сборку и запуск:
 ```shell
-sudo docker compose  up
+docker compose up
 ```
