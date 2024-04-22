@@ -1,14 +1,18 @@
 import validators
+import whois
+
 from aiogram import Bot, F, Router
 from aiogram.filters import CommandStart
 from aiogram.types import CallbackQuery, FSInputFile, Message
 from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
 
+from app.dao.user import UserDAO
 import app.keyboards.inline_keyboard as kb
 from app.misc import msg
 from app.misc.cmd import Command as cmd
-from app.services.pageshot_service import create_pageshot
+from app.services.pageshot_service import create_pageshot, get_site_info
+from app.services.user_service import UserService
 
 router = Router(name="main_menu-router")
 
@@ -37,11 +41,13 @@ async def change_language(callback: CallbackQuery) -> None:
 
 
 @router.callback_query((F.data == __(cmd.RU)) | (F.data == __(cmd.EN)))
-async def set_language(callback: CallbackQuery) -> None:
+async def set_language(callback: CallbackQuery, user_dao: UserDAO) -> None:
     """Обработчик получение языка от пользователя."""
     lang: str = callback.data[9:]
-    # ________ запись языка в БД_____________
-    await callback.message.edit_text(f"Вы выбрали {lang}")
+    if await UserService.check_user(user_dao, callback.from_user.id):
+        await UserService.update_user_lang(callback.from_user.id, lang)
+    else:
+        await UserService.add_user(user_dao, callback.message.contact, lang)
 
 
 @router.callback_query(F.data == __(cmd.CREATE_PAGESHOT))
@@ -56,14 +62,17 @@ async def get_pageshot(message: Message, bot: Bot) -> None:
     """Обработчик веденного url."""
     if validators.url(message.text):
         await message.answer(_(msg.SEND_REQUEST))
-        path_pageshot, time_processing, chat_id = await create_pageshot(
+        path_pageshot, time_processing = await create_pageshot(
             message.text,
-            message.chat.id, message.from_user.id,
+            message.from_user.id,
             str(message.date)
         )
+        site_info = whois.whois(message.text)
         await message.reply_photo(
             photo=FSInputFile(path_pageshot),
-            caption=_(msg.SEND_PAGESHOT),
+            caption=f"{site_info.domain_name}\n"
+                    f"{message.text}\n"
+                    f"{time_processing} ",
             reply_markup=kb.more_site()
         )
         await message.delete()
@@ -73,5 +82,5 @@ async def get_pageshot(message: Message, bot: Bot) -> None:
 
 @router.callback_query((F.data == __(cmd.MORE)))
 async def more_site(callback: CallbackQuery) -> None:
-    """Обработчик получение языка от пользователя."""
-    await callback.answer("Крутой сайт!")
+    """Обработчик нажатия кнопки -Подробнее."""
+    await callback.answer(get_site_info(callback.message.text))

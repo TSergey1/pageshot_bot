@@ -34,7 +34,7 @@ async def main():
     dp = Dispatcher(storage=storage)
 
     i18n = I18n(path=Path(__file__).parent / 'locales',
-                default_locale='ru',
+                default_locale='en',
                 domain='message')
     BotI18nMiddleware(i18n).setup(dp)
 

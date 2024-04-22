@@ -1,6 +1,6 @@
 from typing import Generic, Type, TypeVar
 
-from sqlalchemy import delete, insert, select
+from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models import Base
