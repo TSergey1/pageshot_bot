@@ -18,7 +18,7 @@ class UserDAO(BaseDAO[User]):
         return result.scalar_one_or_none()
 
     async def set_user_lang(self, user_id: int, lang: str) -> None:
-        """Обновить значение поля banned на True."""
+        """Обновить значение language для User."""
         query = (
             update(User).where(User.tg_id == user_id,).values(language=lang)
         )

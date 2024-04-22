@@ -1,4 +1,5 @@
 import validators
+
 import whois
 
 from aiogram import Bot, F, Router
@@ -53,8 +54,7 @@ async def set_language(callback: CallbackQuery, user_dao: UserDAO) -> None:
 @router.callback_query(F.data == __(cmd.CREATE_PAGESHOT))
 async def enter_url(callback: CallbackQuery) -> None:
     """Обработчик кнопки - Добавить Image в чат."""
-    bot_me = await callback.bot.me()
-    await callback.answer(url=f"t.me/{bot_me.username}?start=1")
+    await callback.answer(_(msg.SEND_REQUEST))
 
 
 @router.message()
@@ -80,7 +80,7 @@ async def get_pageshot(message: Message, bot: Bot) -> None:
         await message.answer(_(msg.ERROR_URL))
 
 
-@router.callback_query((F.data == __(cmd.MORE)))
-async def more_site(callback: CallbackQuery) -> None:
-    """Обработчик нажатия кнопки -Подробнее."""
-    await callback.answer(get_site_info(callback.message.text))
+# @router.callback_query((F.data == __(cmd.MORE)))
+# async def more_site(callback: CallbackQuery, bot: Bot) -> None:
+#     """Обработчик нажатия кнопки - Подробнее."""
+#     await callback.answer(get_site_info(callback.message.text))

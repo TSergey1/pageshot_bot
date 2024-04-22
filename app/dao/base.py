@@ -24,9 +24,3 @@ class BaseDAO(Generic[Model]):
         query = insert(self.model).values(**data)
         await self.session.execute(query)
         await self.session.commit()
-
-    # async def delete(self, **data) -> None:
-    #     """Удалить запись из базы."""
-    #     query = delete(self.model).filter_by(**data)
-    #     await self.session.execute(query)
-    #     await self.session.commit()
