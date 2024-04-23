@@ -1,5 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from app import config
 from app.misc.cmd import Button as btn
 from app.misc.cmd import Command as cmd
 
@@ -12,7 +13,10 @@ def get_btn(text: str, action: str) -> InlineKeyboardButton:
 def main_kb() -> InlineKeyboardMarkup:
     """Клавиатура главного меню."""
     change_language_btn = get_btn(btn.CHANGE_LANGUAGE, cmd.CHANGE_LANGUAGE)
-    create_pageshot = get_btn(btn.CREATE_PAGESHOT, cmd.CREATE_PAGESHOT)
+    create_pageshot = InlineKeyboardButton(
+        text=btn.CREATE_PAGESHOT,
+        url=f"https://t.me/{config.BOT_NAME}?startgroup=true"
+    )
     return InlineKeyboardMarkup(
         inline_keyboard=[[change_language_btn, create_pageshot], ]
     )

@@ -1,7 +1,7 @@
-import json
-import socket
 import time
-from urllib import parse, request
+import asyncwhois
+from urllib import parse
+from urllib.parse import urlparse
 
 from pyppeteer import launch
 
@@ -29,19 +29,42 @@ async def create_pageshot(url: str, user_id: int, date_msg: str):
     return path_pageshot, time_processing
 
 
-def get_site_info(url: str):
+async def site_info(url: str, value: list[tuple]) -> str:
     """Возвращает информацию о сайте"""
-    ip = socket.gethostbyname(url)
-    url_ip = f'http://ipinfo.io/{ip}/json' 
-    data = json.load(request.urlopen(url_ip))
-    org = data.get("org")
-    city = data.get("city")
-    country = data.get("country")
-    timezone = data.get("timezone")
+    netloc = urlparse(url).netloc
+    _, parsed_dict = await asyncwhois.aio_whois(netloc)
+
+    data = {}
+
+    for key, name in value:
+        if key in parsed_dict:
+            value = parsed_dict[key]
+            if isinstance(value, list):
+                value = ", ".join(value[:2])
+            data[name] = value
+
+    result_data = []
+    for key, value in data.items():
+        result_data.append(f"{key}: {value}")
+
+    return "\n".join(result_data)
+
+
+async def get_site_info(url: str):
+    value = [
+        ("domain_name", "Даменное имя"),
+        ("registrar", "Регистратор"),
+        ("creation_date", "Дата создания"),
+        ("registrant_organization", "Зарегистрирован"),
+    ]
+    return await site_info(url, value)
+
+
+async def get_info_for_foto(url: str, time_processing: str):
+    """Возвращает информацию к foto"""
+    domain_name = await site_info(url, [("domain_name", "Даменное имя"),])
     return (
-        f"ip -{ip}, "
-        f"org -{org}, "
-        f"city -{city}, "
-        f"country -{country}, "
-        f"timezone -{timezone}"
+        f"{domain_name}\n"
+        f"Веб-сайт: {url}\n"
+        f"Время обработки: {time_processing} с."
     )

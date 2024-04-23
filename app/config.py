@@ -47,3 +47,6 @@ PATH_PAGESHOT = "app/image_pageshots/{0}_{1}_{2}.png"
 class Lenguage(enum.Enum):
     en = "en"
     ru = "ru"
+
+
+BOT_NAME = "Page_shotBot"

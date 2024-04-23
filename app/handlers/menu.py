@@ -1,8 +1,7 @@
 import validators
 
-import whois
-
 from aiogram import Bot, F, Router
+from aiogram.fsm.context import FSMContext
 from aiogram.filters import CommandStart
 from aiogram.types import CallbackQuery, FSInputFile, Message
 from aiogram.utils.i18n import gettext as _
@@ -12,7 +11,9 @@ from app.dao.user import UserDAO
 import app.keyboards.inline_keyboard as kb
 from app.misc import msg
 from app.misc.cmd import Command as cmd
-from app.services.pageshot_service import create_pageshot, get_site_info
+from app.services.pageshot_service import (create_pageshot,
+                                           get_info_for_foto,
+                                           get_site_info)
 from app.services.user_service import UserService
 
 router = Router(name="main_menu-router")
@@ -21,7 +22,7 @@ router = Router(name="main_menu-router")
 @router.message(CommandStart())
 @router.callback_query(F.data == cmd.RU)
 @router.callback_query(F.data == cmd.EN)
-async def cmd_start(call_or_message: CallbackQuery | Message,) -> None:
+async def cmd_start(call_or_message: CallbackQuery | Message) -> None:
     """Обработчик главного меню бота."""
     text = _(msg.START_MASSAGE).format(
         first_name=call_or_message.from_user.first_name
@@ -41,46 +42,40 @@ async def change_language(callback: CallbackQuery) -> None:
                                      reply_markup=kb.change_language())
 
 
-@router.callback_query((F.data == __(cmd.RU)) | (F.data == __(cmd.EN)))
+@router.callback_query(F.data.startswith("language_"))
 async def set_language(callback: CallbackQuery, user_dao: UserDAO) -> None:
     """Обработчик получение языка от пользователя."""
     lang: str = callback.data[9:]
     if await UserService.check_user(user_dao, callback.from_user.id):
-        await UserService.update_user_lang(callback.from_user.id, lang)
+        await UserService.update_user_lang(user_dao,
+                                           callback.from_user.id,
+                                           lang)
     else:
         await UserService.add_user(user_dao, callback.message.contact, lang)
 
 
-@router.callback_query(F.data == __(cmd.CREATE_PAGESHOT))
-async def enter_url(callback: CallbackQuery) -> None:
-    """Обработчик кнопки - Добавить Image в чат."""
-    await callback.answer(_(msg.SEND_REQUEST))
-
-
 @router.message()
-async def get_pageshot(message: Message, bot: Bot) -> None:
+async def get_pageshot(message: Message, state: FSMContext, bot: Bot) -> None:
     """Обработчик веденного url."""
     if validators.url(message.text):
-        await message.answer(_(msg.SEND_REQUEST))
+        stub_message = await message.reply(_(msg.SEND_REQUEST))
         path_pageshot, time_processing = await create_pageshot(
             message.text,
             message.from_user.id,
             str(message.date)
         )
-        site_info = whois.whois(message.text)
         await message.reply_photo(
             photo=FSInputFile(path_pageshot),
-            caption=f"{site_info.domain_name}\n"
-                    f"{message.text}\n"
-                    f"{time_processing} ",
+            caption=await get_info_for_foto(message.text, time_processing),
             reply_markup=kb.more_site()
         )
-        await message.delete()
+        await bot.delete_message(stub_message.chat.id, stub_message.message_id)
     else:
         await message.answer(_(msg.ERROR_URL))
 
 
-# @router.callback_query((F.data == __(cmd.MORE)))
-# async def more_site(callback: CallbackQuery, bot: Bot) -> None:
-#     """Обработчик нажатия кнопки - Подробнее."""
-#     await callback.answer(get_site_info(callback.message.text))
+@router.callback_query((F.data == __(cmd.MORE)))
+async def more_site(callback: CallbackQuery, state: FSMContext) -> None:
+    """Обработчик нажатия кнопки - Подробнее."""
+    text = callback.message.reply_to_message.text
+    await callback.answer(await get_site_info(text))
