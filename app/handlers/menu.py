@@ -1,7 +1,6 @@
 import validators
 from aiogram import Bot, F, Router
 from aiogram.filters import CommandStart
-from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, FSInputFile, Message
 from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
@@ -53,7 +52,7 @@ async def set_language(callback: CallbackQuery, user_dao: UserDAO) -> None:
 
 
 @router.message()
-async def get_pageshot(message: Message, state: FSMContext, bot: Bot) -> None:
+async def get_pageshot(message: Message, bot: Bot) -> None:
     """Обработчик веденного url."""
     if validators.url(message.text):
         stub_message = await message.reply(_(msg.SEND_REQUEST))
