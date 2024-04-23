@@ -72,7 +72,7 @@ async def get_pageshot(message: Message, bot: Bot) -> None:
 
 
 @router.callback_query((F.data == __(cmd.MORE)))
-async def more_site(callback: CallbackQuery, state: FSMContext) -> None:
+async def more_site(callback: CallbackQuery) -> None:
     """Обработчик нажатия кнопки - Подробнее."""
     text = callback.message.reply_to_message.text
     await callback.answer(await get_site_info(text))
