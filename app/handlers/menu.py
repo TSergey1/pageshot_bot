@@ -1,18 +1,16 @@
 import validators
-
 from aiogram import Bot, F, Router
-from aiogram.fsm.context import FSMContext
 from aiogram.filters import CommandStart
+from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, FSInputFile, Message
 from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
 
-from app.dao.user import UserDAO
 import app.keyboards.inline_keyboard as kb
+from app.dao.user import UserDAO
 from app.misc import msg
 from app.misc.cmd import Command as cmd
-from app.services.pageshot_service import (create_pageshot,
-                                           get_info_for_foto,
+from app.services.pageshot_service import (create_pageshot, get_info_for_foto,
                                            get_site_info)
 from app.services.user_service import UserService
 

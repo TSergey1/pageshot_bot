@@ -1,8 +1,8 @@
 import time
-import asyncwhois
 from urllib import parse
 from urllib.parse import urlparse
 
+import asyncwhois
 from pyppeteer import launch
 
 from app import config
