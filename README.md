@@ -4,7 +4,7 @@
 [![Python versions](https://img.shields.io/badge/python-3.11-blue)](#)
 [![Telegram API](https://img.shields.io/badge/Telegram%20Bot%20API-6.9-blue?logo=telegram)](https://core.telegram.org/bots/api)
 [![Aiogram version](https://img.shields.io/badge/Aiogram-3.1.1-blue)](https://aiogram.dev/)
-[![Main auto_bot workflow](https://github.com/andprov/auto_bot/actions/workflows/main.yml/badge.svg)](https://github.com/andprov/auto_bot/actions/workflows/main.yml)
+[![Main pageshot_bot workflow](https://github.com/TSergey1/pageshot_bot/actions/workflows/main.yml/badge.svg)](https://github.com/TSergey1/pageshot_bot/actions/workflows/main.yml)
 
 
 <details> 
