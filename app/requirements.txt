@@ -1,0 +1,13 @@
+aiogram==3.4.1
+alembic==1.13.1
+asyncpg==0.29.0
+Babel==2.14.0
+python-dotenv==1.0.0
+SQLAlchemy==2.0.22
+redis==5.0.3
+validators==0.28.0
+flake8==7.0.0
+python-whois==0.9.3
+celery==5.4.0
+pyppeteer==1.0.0
+asyncwhois==1.1.0

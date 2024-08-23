@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from app.config import DB_URL
+from app.config import DB_URL_ALEMBIC
 from app.db.models import Base
 from app.db.models import User # noqa
 
@@ -14,7 +14,7 @@ from app.db.models import User # noqa
 config = context.config
 
 config.set_main_option(
-    "sqlalchemy.url", f"{DB_URL}?async_fallback=True"
+    "sqlalchemy.url", f"{DB_URL_ALEMBIC}?async_fallback=True"
 )
 
 # Interpret the config file for Python logging.
