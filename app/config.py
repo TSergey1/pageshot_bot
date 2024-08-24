@@ -23,11 +23,9 @@ POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "postgres")
 
 DB_URL = (
-    f"{DB_TYPE}+{DB_CONNECTOR}://{POSTGRES_USER}:{POSTGRES_PASSWORD}"
+    f"postgresql+psycopg://{POSTGRES_USER}:{POSTGRES_PASSWORD}"
     f"@{DB_HOST}:{DB_PORT}/{POSTGRES_DB}"
 )
-
-DB_URL_ALEMBIC = f"{DB_TYPE}://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{DB_HOST}:{DB_PORT}/{POSTGRES_DB}"
 
 # REDIS
 REDIS_HOST = "localhost" if DEBUG else os.getenv("REDIS_HOST", "localhost")
