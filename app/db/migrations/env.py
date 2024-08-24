@@ -14,7 +14,7 @@ from app.db.models import User # noqa
 config = context.config
 
 config.set_main_option(
-    "sqlalchemy.url", f"{DB_URL_ALEMBIC}?async_fallback=True"
+    "sqlalchemy.url", f"{DB_URL_ALEMBIC}"
 )
 
 # Interpret the config file for Python logging.
