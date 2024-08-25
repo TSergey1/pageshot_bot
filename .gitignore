@@ -5,5 +5,5 @@ __pycache__/
 .idea
 .vscode
 .git
-.mypy_cache
-data/
+.mypy_cachevenv/
+venv/
