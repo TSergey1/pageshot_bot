@@ -30,4 +30,4 @@ class User(Base):
     )
 
     def __repr__(self):
-        return f"tg_id={self.tg_id} name={self.language}"
+        return f"tg_id={self.tg_id} language={self.language}"
