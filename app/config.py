@@ -27,6 +27,7 @@ DB_URL = (
     f"@{DB_HOST}:{DB_PORT}/{POSTGRES_DB}"
 )
 
+
 # REDIS
 REDIS_HOST = "localhost" if DEBUG else os.getenv("REDIS_HOST", "localhost")
 REDIS_PORT = os.getenv("REDIS_PORT", 6379)
