@@ -26,10 +26,7 @@ async def main():
     redis = Redis(host=config.REDIS_HOST, port=config.REDIS_PORT)
     storage = RedisStorage(redis=redis)
 
-    engine = create_async_engine(config.DB_URL,
-                                 echo=config.DEBUG,
-                                 pool_pre_ping=True,
-                                 pool_recycle=3600)
+    engine = create_async_engine(config.DB_URL, echo=config.DEBUG)
     sessionmaker = async_sessionmaker(engine, expire_on_commit=False)
 
     dp = Dispatcher(storage=storage)
