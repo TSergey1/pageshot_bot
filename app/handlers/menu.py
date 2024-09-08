@@ -17,38 +17,33 @@ router = Router(name="main_menu-router")
 
 
 @router.message(CommandStart())
-@router.callback_query(F.data == cmd.RU)
-@router.callback_query(F.data == cmd.EN)
-async def cmd_start(call_or_message: CallbackQuery | Message) -> None:
+async def cmd_start(message: Message) -> None:
     """Обработчик главного меню бота."""
     text = _(msg.START_MASSAGE).format(
-        first_name=call_or_message.from_user.first_name
+        first_name=message.from_user.first_name
     )
-    if isinstance(call_or_message, Message):
-        await call_or_message.answer(text, reply_markup=kb.main_kb())
-    else:
-        await call_or_message.message.edit_text(
-                text, reply_markup=kb.main_kb()
-            )
+    await message.answer(text, reply_markup=kb.main_kb())
 
 
-@router.callback_query(F.data == __(cmd.CHANGE_LANGUAGE))
+@router.callback_query(F.data == (cmd.CHANGE_LANGUAGE))
 async def change_language(callback: CallbackQuery) -> None:
     """Обработчик выбора языка."""
     await callback.message.edit_text(_(msg.CHANGE_LANGUAGE),
                                      reply_markup=kb.change_language())
 
 
-@router.callback_query(F.data.startswith("language_"))
+@router.callback_query(F.data.startswith(cmd.LANGUAGE))
 async def set_language(callback: CallbackQuery, user_dao: UserDAO) -> None:
     """Обработчик получение языка от пользователя."""
     lang: str = callback.data[9:]
+
     if await UserService.check_user(user_dao, callback.from_user.id):
         await UserService.update_user_lang(user_dao,
                                            callback.from_user.id,
                                            lang)
     else:
-        await UserService.add_user(user_dao, callback.message.contact, lang)
+        await UserService.add_user(user_dao, callback.from_user, lang)
+    await cmd_start(callback.message)
 
 
 @router.message()
@@ -69,6 +64,7 @@ async def get_pageshot(message: Message, bot: Bot) -> None:
         await bot.delete_message(stub_message.chat.id, stub_message.message_id)
     else:
         await message.answer(_(msg.ERROR_URL))
+    await cmd_start(message)
 
 
 @router.callback_query((F.data == __(cmd.MORE)))

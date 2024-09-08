@@ -2,8 +2,10 @@ class Command:
     CHANGE_LANGUAGE = "change_language"
     CREATE_PAGESHOT = "create_pageshot"
 
-    RU = "language_ru"
-    EN = "language_en"
+    LANGUAGE = "language_"
+
+    RU = f"{LANGUAGE}ru"
+    EN = f"{LANGUAGE}en"
 
     MORE = "more"
 

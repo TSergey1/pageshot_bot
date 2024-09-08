@@ -1,4 +1,4 @@
-from aiogram.types import Contact
+from aiogram.types.user import User as telegram_user
 
 from app.dao.user import UserDAO
 from app.db.models import User
@@ -15,11 +15,14 @@ class UserService:
         return False
 
     @classmethod
-    async def add_user(cls, dao: UserDAO, contact: Contact, lang: str) -> None:
+    async def add_user(cls,
+                       dao: UserDAO,
+                       user: telegram_user,
+                       lang: str) -> None:
         """Добавить пользователя в базу."""
         await dao.add(
-            tg_id=contact.user_id,
-            first_name=contact.first_name,
+            tg_id=user.id,
+            first_name=user.first_name,
             language=lang
         )
 

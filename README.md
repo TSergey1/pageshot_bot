@@ -79,13 +79,12 @@ DEBUG=False
 # BOT
 BOT_TOKEN=<bot_token>
 GROUP_ID=<group_id>
+ADMIN=<admin_id>
 
 # DB
-DB_TYPE=postgresql
-DB_CONNECTOR=psycopg
-DB_HOST=db
+DB_HOST=<host_db>
 DB_PORT=5432
-POSTGRES_DB=bot
+POSTGRES_DB=db_bot
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 
@@ -94,8 +93,8 @@ REDIS_HOST=redis
 REDIS_PORT=6379
 
 # Docker images
-DB_IMAGE=postgres:14
-REDIS_IMAGE=redis:7
+DB_IMAGE=postgres
+REDIS_IMAGE=redis
 ```
 
 Выполнить сборку и запуск:
